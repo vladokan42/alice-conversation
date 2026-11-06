@@ -1,0 +1,13 @@
+{
+  "state_path": "/data/opt/alice-conversation/state/enabled.json",
+  "capture_socket": "/run/alice-conversation/mic.sock",
+  "control_listen": "127.0.0.1:18862",
+  "control_token_file": "/data/opt/alice-conversation/secrets/control.token",
+  "server_url": "wss://ambient-server.example.invalid:18863/v1/listen",
+  "server_ca_file": "/data/opt/alice-conversation/secrets/server-ca.pem",
+  "token_file": "/data/opt/alice-conversation/secrets/host.token",
+  "glagol_host": "192.0.2.10:1961",
+  "glagol_token_file": "/data/opt/alice-conversation/secrets/glagol.token",
+  "glagol_cert_file": "/data/opt/alice-conversation/secrets/glagol-leaf.pem",
+  "quiet_rms": 0.02
+}

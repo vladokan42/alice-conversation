@@ -1,0 +1,21 @@
+aiohttp==3.14.5
+vosk==0.3.45
+webrtcvad-wheels==2.0.14.post1
+# Exact transitive runtime versions exercised on Python 3.13.
+aiohappyeyeballs==2.7.1
+aiosignal==1.4.0
+attrs==26.1.0
+certifi==2026.10.23
+cffi==2.1.1
+charset-normalizer==3.5.2
+frozenlist==1.8.0
+idna==3.20
+multidict==7.2.1
+propcache==0.5.4
+pycparser==3.12
+requests==2.34.2
+srt==3.5.3
+tqdm==4.70.1
+urllib3==2.8.0
+websockets==17.4
+yarl==1.25.1

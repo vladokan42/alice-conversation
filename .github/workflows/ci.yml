@@ -1,0 +1,58 @@
+name: Core checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    name: Python 3.13
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.13'
+      - name: Dependencies
+        run: python -m pip install -r server/requirements.txt
+      - name: Check dependencies
+        run: python -m pip check
+      - name: Engine, protocol and HTTP/WS checks
+        working-directory: server
+        run: python -B -W error::ResourceWarning -m unittest discover -s tests -v
+  go:
+    name: Go 1.27.3
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GOWORK: 'off'
+      GOTOOLCHAIN: go1.27.3
+      GOFLAGS: -mod=readonly
+    defaults:
+      run:
+        working-directory: device
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version: '1.27.3'
+          cache-dependency-path: device/go.sum
+      - name: Tests
+        run: go test -count=1 ./...
+      - name: Race detector
+        run: go test -race -count=1 ./...
+      - name: Vet and dependency verification
+        run: |
+          go vet ./...
+          go mod verify
+      - name: Static Linux ARM64 build
+        env:
+          CGO_ENABLED: '0'
+          GOOS: linux
+          GOARCH: arm64
+        run: go build -buildvcs=false -trimpath -o "$RUNNER_TEMP/alice-ambient" ./cmd/alice-ambient

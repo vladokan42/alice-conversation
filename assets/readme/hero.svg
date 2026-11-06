@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380" role="img" aria-labelledby="title desc">
+<title id="title">Алиса — режим собеседника</title>
+<desc id="desc">Локальное распознавание речи, короткие реплики после паузы и отмена устаревших ответов. Python и Go.</desc>
+<rect width="1200" height="380" rx="24" fill="#0c0c10"/>
+<g font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+<text x="64" y="62" font-size="22" letter-spacing="2" fill="#aaa6b5">ALICE CONVERSATION</text>
+<text x="60" y="157" font-size="80" font-weight="700" fill="#f5f4f8">Алиса.</text>
+<text x="60" y="248" font-size="72" font-weight="700" fill="#f5f4f8">Режим собеседника.</text>
+<text x="64" y="318" font-size="26" fill="#aaa6b5">Локальная речь. Короткий ответ. Без опоздавших реплик.</text>
+<text x="1136" y="62" font-size="22" fill="#c4b5fd" text-anchor="end">PYTHON + GO</text>
+</g>
+<g transform="translate(958 114)" fill="none" stroke="#c4b5fd" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M0 0h112a20 20 0 0 1 20 20v39a20 20 0 0 1-20 20H46L23 100V79H0a20 20 0 0 1-20-20V20A20 20 0 0 1 0 0Z"/>
+<path d="M12 39h12m18 0h12m18 0h12"/>
+</g>
+</svg>

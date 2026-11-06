@@ -1,0 +1,11 @@
+.venv
+.tmp
+__pycache__
+tests
+*.wav
+*.pcm
+*.log
+.env*
+*secret*
+*token*
+*key*
