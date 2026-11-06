@@ -112,7 +112,7 @@ func TestRunLoopbackControlMuteAndSpeech(t *testing.T) {
 		}
 	}))
 	defer hostSrv.Close()
-	dir := t.TempDir()
+	dir := privateTempDir(t)
 	sockdir, err := os.MkdirTemp(".", ".run-")
 	if err != nil {
 		t.Fatal(err)

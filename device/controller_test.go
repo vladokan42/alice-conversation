@@ -11,9 +11,18 @@ import (
 	"time"
 )
 
+func privateTempDir(t *testing.T) string {
+	t.Helper()
+	dir := t.TempDir()
+	if err := os.Chmod(dir, 0700); err != nil {
+		t.Fatal(err)
+	}
+	return dir
+}
+
 func controller(t *testing.T) (*Controller, time.Time, uint64) {
 	t.Helper()
-	c, err := NewController(Config{StatePath: filepath.Join(t.TempDir(), "enabled.json"), QuietRMS: .02})
+	c, err := NewController(Config{StatePath: filepath.Join(privateTempDir(t), "enabled.json"), QuietRMS: .02})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -93,7 +102,7 @@ func TestBootMuteRestoreAndExplicitOff(t *testing.T) {
 	}
 }
 func TestStatePermissionsIgnoreRestrictiveUmask(t *testing.T) {
-	path := filepath.Join(t.TempDir(), "state.json")
+	path := filepath.Join(privateTempDir(t), "state.json")
 	old := syscall.Umask(0777)
 	defer syscall.Umask(old)
 	if _, err := NewController(Config{StatePath: path}); err != nil {
@@ -106,14 +115,14 @@ func TestStatePermissionsIgnoreRestrictiveUmask(t *testing.T) {
 func TestStateRejectsCorruptOrUnsafeFile(t *testing.T) {
 	for _, body := range []string{"{}", "{\"enabled\":null}", "{\"enabled\":true,\"text\":\"no\"}", "{\"enabled\":true} {}", "false"} {
 		t.Run(body, func(t *testing.T) {
-			p := filepath.Join(t.TempDir(), "state")
+			p := filepath.Join(privateTempDir(t), "state")
 			os.WriteFile(p, []byte(body), 0600)
 			if _, err := NewController(Config{StatePath: p}); err == nil {
 				t.Fatal("accepted invalid state")
 			}
 		})
 	}
-	p := filepath.Join(t.TempDir(), "state")
+	p := filepath.Join(privateTempDir(t), "state")
 	os.WriteFile(p, []byte("{\"enabled\":true}"), 0644)
 	os.Chmod(p, 0644) // Explicitly override a restrictive host umask.
 	if _, err := NewController(Config{StatePath: p}); err == nil {
